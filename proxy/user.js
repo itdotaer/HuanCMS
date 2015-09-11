@@ -25,6 +25,13 @@ exports.deleteById = function(userId, callback){
     User.remove({_id: userId}, callback);
 };
 
+exports.updateById = function(userId, user, callback){
+    var conditions = {_id: userId};
+    delete user._id;
+    var update = user;
+    User.update(conditions, update, callback);
+}
+
 exports.userLogin = function(userName, password, callback){
     User.find({loginName: userName, pwd: password}, callback);
 };

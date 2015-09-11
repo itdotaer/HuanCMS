@@ -2,11 +2,17 @@ var proxy = require('../proxy');
 var UserProxy = proxy.User;
 
 exports.createUser = function(req, res, next){
-    UserProxy.createUser('name', 'loginname', 'pwd', 'email', function(err, user){
+    var user = req.body;
+
+    if(!user){
+        return res.json({errorMsg: 'No user data in body.'});
+    }
+
+    UserProxy.createUser('Harry' + Math.floor(Math.random() * 9999999999), 'Harry Hu' + Math.floor(Math.random() * 9999999999), 'pwd', 'email' + Math.floor(Math.random() * 9999999999), function(err, user){
         if(err){
-            res.json({errorMsg: err});
+            return res.json({errorMsg: err});
         }else{
-            res.json({data: user});
+            return res.json({data: user});
         }
     });
 };
@@ -57,6 +63,19 @@ exports.deleteById = function(req, res, next){
 
 exports.updateUser = function(req, req, next){
     var userId = req.params.id;
+    var user = req.body;
+
+    if(!user){
+        return res.json({errorMsg: 'No user data in body.'});
+    }
+
+    UserProxy.updateById(userId, user, function(err, count){
+        if(err){
+            return res.json({errorMsg: err});
+        }
+
+        return res.json({success: true});
+    });
 };
 
 exports.userLogin = function(req, res, next){
