@@ -1,2 +1,5 @@
-*.log
-/node_modules/*
+/HuanCMS.Api/node_modules/*
+
+/HuanCMS.Index/node_modules/*
+
+/HuanCMS.Admin/node_modules/*
