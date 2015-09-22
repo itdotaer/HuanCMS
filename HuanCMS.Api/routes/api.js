@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userApi = require('../api/user');
+var classApi = require('../api/class');
 var auth = require('../middlewares/auth');
 
 router.route('/users')
@@ -13,6 +14,17 @@ router.route('/user/:id')
     .get(userApi.getById)
     .put(userApi.updateUser)
     .delete(userApi.deleteById);
+
+router.route('/classes')
+    .all(auth.loginRequired)
+    .post(classApi.add)
+    .get(classApi.getAll);
+
+router.route('/class/:id')
+    .all(auth.loginRequired)
+    .get(classApi.getById)
+    .put(classApi.update)
+    .delete(classApi.delete);
 
 router.route('/login')
     .post(userApi.userLogin);

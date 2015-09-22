@@ -1,5 +1,6 @@
 var proxy = require('../proxy');
 var UserProxy = proxy.User;
+var base = require('./base');
 
 exports.createUser = function(req, res, next){
     var user = req.body;
@@ -11,9 +12,9 @@ exports.createUser = function(req, res, next){
     UserProxy.createUser('Harry' + Math.floor(Math.random() * 9999999999), 'Harry Hu' + Math.floor(Math.random() * 9999999999), 'pwd', 'email' + Math.floor(Math.random() * 9999999999), function(err, user){
         if(err){
             return res.json({errorMsg: err});
-        }else{
-            return res.json({data: user});
         }
+
+        return res.json({data: user});
     });
 };
 
@@ -52,7 +53,10 @@ exports.getById = function(req, res, next){
 
 exports.deleteById = function(req, res, next){
     var userId = req.params.id;
-    UserProxy.deleteById(userId, function(err, count){
+
+    var operUserId = base.getLoginUserId(req, res, next);
+
+    UserProxy.deleteById(userId, operUserId, function(err, count){
         if(err){
             return res.json({errorMsg: err});
         }
@@ -69,7 +73,9 @@ exports.updateUser = function(req, req, next){
         return res.json({errorMsg: 'No user data in body.'});
     }
 
-    UserProxy.updateById(userId, user, function(err, count){
+    var operUserId = base.getLoginUserId(req, res, next);
+
+    UserProxy.updateById(userId, user, operUserId, function(err, count){
         if(err){
             return res.json({errorMsg: err});
         }

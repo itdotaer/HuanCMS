@@ -6,3 +6,11 @@ exports.loginRequired = function(req, res, next){
     }
     next();
 };
+
+exports.getLoginUser = function(req, res, next){
+    if(!req.session || !req.session.user){
+        return null;
+    }
+
+    return req.session.user;
+};
