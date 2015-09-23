@@ -13,7 +13,9 @@ mongoose.connect(config.db, {
 
 //models
 require('./user');
-require('./class.js')
+require('./class');
+require('./post');
 
 exports.User = mongoose.model('User');
 exports.Class = mongoose.model('Class');
+exports.Post = mongoose.model('Post');
