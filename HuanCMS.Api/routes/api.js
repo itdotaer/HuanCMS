@@ -63,6 +63,6 @@ router.put('/:classId/post/:id', auth.loginRequired, classApi.update)
 router.delete('/:classId/post/:id', auth.loginRequired, classApi.delete);
 
 //User login
-router.post('/login', userApi.userLogin);
+router.post('/users/login', userApi.userLogin);
 
 module.exports = router;

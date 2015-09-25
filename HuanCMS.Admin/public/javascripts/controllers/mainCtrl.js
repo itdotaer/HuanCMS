@@ -9,6 +9,6 @@
     MainCtrl.$inject = ['$scope', 'logger'];
 
     function MainCtrl($scope, logger) {
-        $scope.appName = "CMFM";
+        
     }
 })();

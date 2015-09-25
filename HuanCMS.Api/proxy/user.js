@@ -42,5 +42,5 @@ exports.updateById = function(userId, user, operUserId, callback){
 };
 
 exports.userLogin = function(userName, password, callback){
-    User.find({loginName: userName, pwd: password}, callback);
+    User.findOne({loginName: userName, pwd: password}, callback);
 };

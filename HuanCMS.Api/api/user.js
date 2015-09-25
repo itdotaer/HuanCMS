@@ -3,13 +3,13 @@ var UserProxy = proxy.User;
 var base = require('./base');
 
 exports.createUser = function(req, res, next){
-    var user = req.body;
+    // var user = req.body;
 
-    if(!user){
-        return res.json({errorMsg: 'No user data in body.'});
-    }
+    // if(!user){
+    //     return res.json({errorMsg: 'No user data in body.'});
+    // }
 
-    UserProxy.createUser('Harry' + Math.floor(Math.random() * 9999999999), 'Harry Hu' + Math.floor(Math.random() * 9999999999), 'pwd', 'email' + Math.floor(Math.random() * 9999999999), function(err, user){
+    UserProxy.createUser('harry', 'harry', 'harry', 'hujiangtao1235@qq.com', '55f2721c3a309f984adcdffb', function(err, user){
         if(err){
             return res.json({errorMsg: err});
         }

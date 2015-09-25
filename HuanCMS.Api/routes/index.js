@@ -1,22 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var userApi = require('../api/user');
-var classApi = require('../api/class');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Welcome to HuanCMS! - Powered By Harry' });
 });
 
-/* Admin Console */
-router.get('/admin', function(req, res, next){
-    res.render('admin', {title: 'Welcome to HuamCMS admin console - Powered By Harry'});
-});
 
 router.get('/add', userApi.createUser);
 router.get('/getUsers', userApi.getUsers);
-
-router.get('/addClass', classApi.add);
 
 router.get('/addUserSession', function(req, res, next){
     if(!req.session.user){
