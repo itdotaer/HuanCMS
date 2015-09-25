@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 
 var config = require('./config');
 var routes = require('./routes/index');
-var api = require('./routes/api')
+var api = require('./routes/api');
 var crossDomain = require('./middlewares/crossDomain');
 
 var app = express();

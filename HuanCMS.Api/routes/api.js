@@ -65,6 +65,4 @@ router.delete('/:classId/post/:id', auth.loginRequired, classApi.delete);
 //User login
 router.post('/users/login', userApi.userLogin);
 
-router.get()
-
 module.exports = router;
