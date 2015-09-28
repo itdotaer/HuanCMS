@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var routes = require('./routes/index');
 var api = require('./routes/api');
-var crossDomain = require('./middlewares/crossDomain');
+var cors = require('cors');
 
 var app = express();
 
@@ -23,7 +23,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Enable session
 app.use(session({
@@ -34,7 +33,9 @@ app.use(session({
 app.use('/', routes);
 
 //api path allow cross domain request
-app.use('/api', crossDomain.allowCrossDomain, api);
+app.use('/api', cors(), api);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // error handlers
 

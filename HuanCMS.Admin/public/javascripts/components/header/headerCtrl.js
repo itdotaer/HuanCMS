@@ -5,9 +5,9 @@
         .controller('HeaderCtrl', HeaderCtrl);
 
     //Inject
-    HeaderCtrl.$inject = [];
+    HeaderCtrl.$inject = ['$scope', '$rootScope'];
 
-    function HeaderCtrl(){
+    function HeaderCtrl($scope, $rootScope){
         //Enable sidebar toggle
         $("[data-toggle='offcanvas']").click(function(e) {
             e.preventDefault();
@@ -24,5 +24,10 @@
                 $(".right-side").toggleClass("strech");
             }
         });
+
+        $scope.logout = function(){
+            $rootScope.isAuthed = false;
+            $rootScope.loginUser = {};
+        };
     };
 })();

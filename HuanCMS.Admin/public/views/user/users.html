@@ -1,0 +1,36 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Users
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Users</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <table class="table">
+        <thead>
+            <th>User Name</th>
+            <th>Display Name</th>
+            <th>Email</th>
+            <th>Created At</th>
+            <th>Created By</th>
+            <th>Updated At</th>
+            <th>Updated By</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{user.name}}</td>
+                <td>{{user.loginName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.createdAt}}</td>
+                <td>{{user.createdBy}}</td>
+                <td>{{user.updatedAt}}</td>
+                <td>{{user.updatedBy}}</td>
+            </tr>
+        </tbody>
+    </table>
+</section>

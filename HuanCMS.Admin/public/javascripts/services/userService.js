@@ -9,7 +9,9 @@
 
     function userService($http, $q, $cookies, md5, logger, APIURL, DEBUG) {
         var service = {
-            login: login
+            login: login,
+            getLoginUser: getLoginUser,
+            get: get
         };
 
         return service;
@@ -26,6 +28,31 @@
                         'Content-Type': 'application/json'
                     }
                 })
+                .success(deferred.resolve)
+                .error(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        function getLoginUser(){
+            var deferred = $q.defer();
+
+            $http.get(APIURL + 'users/login',
+                {
+                    headers:{
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .success(deferred.resolve)
+                .error(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        function get(index, size){
+            var deferred = $q.defer();
+
+            $http.get(APIURL + 'users?index=' + index + '&size=' + size)
                 .success(deferred.resolve)
                 .error(deferred.reject);
 

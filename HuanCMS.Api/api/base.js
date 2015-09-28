@@ -1,12 +1,16 @@
 var auth = require('../middlewares/auth');
 
 exports.getLoginUserId = function(req, res, next){
-    var loginUser = auth.getLoginUser(req, res, next);
+    auth.getLoginUser(req, res, next, function(decodeUser, err){
+        if(err){
+            return res.json({errorMsg: err});
+        }
 
-    if(!loginUser){
-        return res.status(403).json({errorMsg: 'User not login!'});
-    }
+        if(!decodeUser){
+            return res.json({errorMsg: 'User not login!'});
+        }
 
-    //operUserId
-    return loginUser._id;
+        //operUserId
+        return decodeUser._id;
+    });
 };

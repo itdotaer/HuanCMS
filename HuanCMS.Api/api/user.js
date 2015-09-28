@@ -1,6 +1,8 @@
 var proxy = require('../proxy');
 var UserProxy = proxy.User;
 var base = require('./base');
+var auth = require('../middlewares/auth');
+var jwtTool = require('../common/jwtTool');
 
 exports.createUser = function(req, res, next){
     // var user = req.body;
@@ -97,6 +99,12 @@ exports.userLogin = function(req, res, next){
             return res.json({errorMsg: err});
         }
 
-        return res.json({data: user});
+        var userToken = '';
+
+        if(user){
+            userToken = jwtTool.signToken(user);
+        }
+
+        return res.send({data: user, userToken: userToken});
     });
 };
