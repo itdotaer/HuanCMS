@@ -94,7 +94,7 @@ exports.userLogin = function(req, res, next){
     var user = req.body;
     if(!user || !user.userName || !user.pwd){
         //User login info not entire
-        res.json({errorMsg: 'UserName and Password is required!'});y
+        return res.json({errorMsg: 'UserName and Password is required!'});y
     }
 
     UserProxy.userLogin(user.userName, user.pwd, function(err, user){
