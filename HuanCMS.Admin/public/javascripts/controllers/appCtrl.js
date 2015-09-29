@@ -9,6 +9,5 @@
     appController.$inject = ['$scope', 'logger'];
 
     function appController($scope, logger) {
-        $scope.message = "CMFM";
     }
 })();

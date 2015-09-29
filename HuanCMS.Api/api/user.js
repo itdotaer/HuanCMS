@@ -33,6 +33,9 @@ exports.getUsers = function(req, res, next){
             if(err){
                 return res.json({errorMsg: err});
             }
+
+            console.log('users', users);
+
             return res.json({data: users});
         });
     }
@@ -103,6 +106,8 @@ exports.userLogin = function(req, res, next){
 
         if(user){
             userToken = jwtTool.signToken(user);
+            //Delete user pwd
+            delete user.pwd;
         }
 
         return res.send({data: user, userToken: userToken});

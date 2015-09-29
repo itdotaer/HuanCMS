@@ -5,9 +5,9 @@
         .controller('HeaderCtrl', HeaderCtrl);
 
     //Inject
-    HeaderCtrl.$inject = ['$scope', '$rootScope'];
+    HeaderCtrl.$inject = ['$scope', 'userService' , 'logger'];
 
-    function HeaderCtrl($scope, $rootScope){
+    function HeaderCtrl($scope, userService, logger){
         //Enable sidebar toggle
         $("[data-toggle='offcanvas']").click(function(e) {
             e.preventDefault();
@@ -26,8 +26,9 @@
         });
 
         $scope.logout = function(){
-            $rootScope.isAuthed = false;
-            $rootScope.loginUser = {};
+            userService.logout(function(){
+                logger.logSuccess('Loutout successed!')
+            });
         };
     };
 })();

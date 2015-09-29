@@ -2,32 +2,29 @@ var UserProxy  = require('../proxy').User;
 var jwtTool = require('../common/jwtTool');
 
 exports.loginRequired = function(req, res, next){
-    console.log('cookies', req.cookies);
+    var bearerToken;
+    var bearerHeader = req.headers['authorization'];
 
-    if (!req.cookies || !req.cookies.user_token) {
-        return res.json({errorMsg: 'User need login!'});
-    }else{
+    if(typeof bearerHeader !== 'undefined'){
+        var bearder = bearerHeader.split(' ');
+
+        bearerToken = bearder[1];
+        req.token = bearerToken;
+        //verify token
         try {
-            jwtTool.verify(req.cookies.user_token);
+            jwtTool.verify(bearerToken);
         } catch (e) {
-            return res.json({errorMsg: 'Error user_token, please re-login!'});
+            return res.json({errorMsg: 'User need login!'});
         }
+
+        next();
+    }else{
+        return res.json({errorMsg: 'User need login!'});
     }
-    next();
 };
 
-exports.getLoginUser = function(req, res, next, callback){
-    if(!req.cookies || !req.cookies.user_token){
-        return callback(null);
-    }
+exports.getLoginUser = function(req, res, next){
+    var token = req.token;
 
-    jwtTool.verify(req.cookies.user_token, function(err, decodeUser){
-        if(err){
-            return callback(null, 'Error user_token, please re-login!');
-        }
-
-        console.log('decode user', decodeUser);
-
-        callback(decodeUser);
-    });
+    return jwtTool.verify(bearerToken);
 };

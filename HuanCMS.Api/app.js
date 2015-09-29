@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var routes = require('./routes/index');
 var api = require('./routes/api');
-var cors = require('cors');
+var cors = require('./common/customCors');
 
 var app = express();
 
@@ -32,8 +32,9 @@ app.use(session({
 
 app.use('/', routes);
 
+
 //api path allow cross domain request
-app.use('/api', cors(), api);
+app.use('/api', cors.customCors(), api);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

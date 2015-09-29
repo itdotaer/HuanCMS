@@ -12,7 +12,7 @@
                 if(res.errorMsg){
                     logger.logError(res.errorMsg);
                 }else{
-                    $scope.uesrs = res.data;
+                    $scope.users = res.data;
                 }
             })
             .catch(function(error){

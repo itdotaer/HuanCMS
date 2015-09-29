@@ -33,8 +33,8 @@
       <![endif]-->
   </head>
   <body class="skin-blue">
-      <ng-header ng-if="isAuthed"></ng-header>
-      <div class="wrapper row-offcanvas row-offcanvas-left" ng-if="isAuthed">
+      <ng-header ng-show="isAuthed"></ng-header>
+      <div class="wrapper row-offcanvas row-offcanvas-left" ng-show="isAuthed">
           <ng-left></ng-left>
           <!-- Right side column. Contains the navbar and content of the page -->
           <aside class="right-side">
@@ -43,7 +43,7 @@
           </aside><!-- /.right-side -->
       </div><!-- ./wrapper -->
 
-     <login-form ng-if="!isAuthed"></login-form>
+     <login-form ng-show="!isAuthed"></login-form>
 
       <!-- jQuery 2.0.2 -->
       <script src="javascripts/vendor/jQuery/jquery.min.js"></script>

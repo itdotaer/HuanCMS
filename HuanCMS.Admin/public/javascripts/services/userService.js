@@ -5,12 +5,13 @@
         .module('services')
         .factory('userService', userService);
 
-    userService.$inject = ['$http', '$q', '$cookies', 'md5','logger', 'APIURL', 'DEBUG'];
+    userService.$inject = ['$http', '$q', '$cookies', '$rootScope', 'md5', 'logger', 'APIURL', 'DEBUG'];
 
-    function userService($http, $q, $cookies, md5, logger, APIURL, DEBUG) {
+    function userService($http, $q, $cookies, $rootScope, md5, logger, APIURL, DEBUG) {
         var service = {
             login: login,
             getLoginUser: getLoginUser,
+            logout: logout,
             get: get
         };
 
@@ -47,6 +48,17 @@
                 .error(deferred.reject);
 
             return deferred.promise;
+        }
+
+        function logout(success){
+            window.localStorage.setItem('isAuthed', false);
+            window.localStorage.setItem('loginUser', angular.toJson({}));
+            window.localStorage.removeItem('token');
+
+            $rootScope.isAuthed = angular.fromJson(window.localStorage.getItem('isAuthed'));
+            $rootScope.loginUser = angular.fromJson(window.localStorage.getItem('loginUser'));
+
+            success();
         }
 
         function get(index, size){
