@@ -12,16 +12,35 @@
 <!-- Main content -->
 <section class="content">
     <!-- Menu -->
-    <div class="btn-group">
-        <button class="btn btn-default" title="Refresh" ng-click="refresh()">
-            <i class="fa fa-refresh"></i>
-        </button>
-        <button class="btn btn-default" title="Add" ng-click="add()">
-            <i class="fa fa-plus"></i>
-        </button>
+    <div clss="row">
+        <div class="col-md-8 pull-left">
+            <div class="btn-group">
+                <button class="btn btn-default" title="Refresh" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <button class="btn btn-default" title="Add" ng-click="add()">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-default" title="Add" ng-click="update({})">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-default" title="Add" ng-click="add()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4 pull-right">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+              </span>
+            </div>
+        </div>
     </div>
     <table class="table">
         <thead>
+            <th style="width: 20px;">Select</th>
             <th>User Name</th>
             <th>Display Name</th>
             <th>Email</th>
@@ -32,6 +51,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="user in users">
+                <td style="width: 20px;"><input type="checkbox" /></td>
                 <td>{{user.name}}</td>
                 <td>{{user.loginName}}</td>
                 <td>{{user.email}}</td>

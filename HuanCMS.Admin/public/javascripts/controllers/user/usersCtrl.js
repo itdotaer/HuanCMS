@@ -9,7 +9,7 @@
     function UsersCtrl($scope, $modal, userService, logger, DEBUG){
         var pagination = {
             index: 1,
-            size: 10
+            size: 100
         };
 
         $scope.init = function(){
