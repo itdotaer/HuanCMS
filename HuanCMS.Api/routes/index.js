@@ -8,7 +8,13 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/add', userApi.createUser);
+router.get('/add', function(req, res, next){
+    for(var i=0; i < 50000; i++){
+        userApi.createUser(req, res, next);
+    }
+
+    return res.json({success: true});
+});
 router.get('/getUsers', userApi.getUsers);
 
 router.get('/addUserSession', function(req, res, next){

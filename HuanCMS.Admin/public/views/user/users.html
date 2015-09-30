@@ -11,6 +11,15 @@
 
 <!-- Main content -->
 <section class="content">
+    <!-- Menu -->
+    <div class="btn-group">
+        <button class="btn btn-default" title="Refresh" ng-click="refresh()">
+            <i class="fa fa-refresh"></i>
+        </button>
+        <button class="btn btn-default" title="Add" ng-click="add()">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
     <table class="table">
         <thead>
             <th>User Name</th>
@@ -26,11 +35,14 @@
                 <td>{{user.name}}</td>
                 <td>{{user.loginName}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.createdAt}}</td>
+                <td>{{user.createdAt | DateFormat}}</td>
                 <td>{{user.createdBy}}</td>
-                <td>{{user.updatedAt}}</td>
+                <td>{{user.updatedAt | DateFormat}}</td>
                 <td>{{user.updatedBy}}</td>
             </tr>
         </tbody>
     </table>
+    <div class="row" style="text-align: center">
+        <pagination total-items="count" ng-model="pagination.index" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" ng-change="pageChanged()" items-per-page="pagination.size"></pagination>
+    </div>
 </section>

@@ -10,9 +10,11 @@
     function userService($http, $q, $cookies, $rootScope, md5, logger, APIURL, DEBUG) {
         var service = {
             login: login,
-            getLoginUser: getLoginUser,
             logout: logout,
-            get: get
+            get: get,
+            add: add,
+            update: update,
+            delete: remove
         };
 
         return service;
@@ -26,21 +28,6 @@
             $http.post(APIURL + 'users/login', angular.toJson(user),
                 {
                     headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .success(deferred.resolve)
-                .error(deferred.reject);
-
-            return deferred.promise;
-        }
-
-        function getLoginUser(){
-            var deferred = $q.defer();
-
-            $http.get(APIURL + 'users/login',
-                {
-                    headers:{
                         'Content-Type': 'application/json'
                     }
                 })
@@ -65,6 +52,44 @@
             var deferred = $q.defer();
 
             $http.get(APIURL + 'users?index=' + index + '&size=' + size)
+                .success(deferred.resolve)
+                .error(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        function add(user){
+            var deferred = $q.defer();
+
+            $http.post(APIURL + 'users', angular.toJson(user), {
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+                .success(deferred.resolve)
+                .error(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        function update(user){
+            var deferred = $q.defer();
+
+            $http.put(APIURL + 'user/' + user._id, angular.toJson(user), {
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+                .success(deferred.resolve)
+                .error(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        function remove(userId){
+            var deferred = $q.defer();
+
+            $http.delete(APIURL + 'user/' + user._id)
                 .success(deferred.resolve)
                 .error(deferred.reject);
 

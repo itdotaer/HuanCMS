@@ -20,6 +20,10 @@ exports.getUsers = function(opt, callback){
         .populate('createdBy').populate('lastUpdatedBy').exec(callback);
 };
 
+exports.getUsersTotalCount = function(callback){
+    User.count({}, callback);
+};
+
 exports.getById = function(userId, callback){
     User.findById({_id: userId}, callback);
 };
