@@ -3409,4 +3409,6 @@ fieldset[disabled] .btn-vk.active {
     width:100%;
     border-top: 2px solid gray;
     height: 40px;
+    background: #f4f4f4;
+    z-index: 100
 }

@@ -28,24 +28,27 @@
 
         $scope.add = function(){
             //Add user modal
-            userModal({}, 'add');
+            userModal(-1, 'add');
         };
 
-        $scope.update = function(user){
+        $scope.update = function(userId){
             //Update user modal
-            userModal(user, 'update');
+            userModal(userId, 'update');
         };
 
-        $scope.delete = function(user){
+        $scope.delete = function(userId){
             //Delete user modal
             var option = window.confirm('Are you sure to delete this record?');
             if(option){
-                userService.delete(user._id)
+                userService.delete(userId)
                     .then(function(res){
                         if(res.success && res.success === true){
                             logger.logSuccess('Delete Successed!');
+                            $scope.refresh();
                         }else if(res.errorMsg){
                             logger.logError(res.errorMsg);
+                        }else{
+                            logger.logError('Uncaught error.')
                         }
                     })
                     .catch(function(error){
@@ -53,6 +56,29 @@
                     })
             }
         };
+
+        $scope.search = function(){
+            if(!$scope.searchTxt){
+                $scope.refresh();
+            }else{
+                $scope.pagination = angular.copy(pagination);
+                $scope.users = [];
+                userService.search($scope.searchTxt, $scope.pagination.index, $scope.pagination.size)
+                    .then(function(res){
+                        if(res.errorMsg){
+                            logger.logError(res.errorMsg);
+                        }else if(res.data){
+                            $scope.users = res.data;
+                            $scope.total = res.total;
+                        }else{
+                            logger.logError('Uncaught error.');
+                        }
+                    })
+                    .catch(function(error){
+                        logger.logError(error);
+                    });
+            }
+        }
 
         function get(){
             userService.get($scope.pagination.index, $scope.pagination.size)
@@ -69,7 +95,7 @@
                 });
         }
 
-        function userModal(user, action, size){
+        function userModal(userId, action, size){
             if(!size){
                 size = 'normal';
             }
@@ -80,8 +106,8 @@
                 size: size,
                 backdrop: 'static',
                 resolve: {
-                    user: function () {
-                        return user;
+                    userId: function () {
+                        return userId;
                     },
                     action: function(){
                         return action;
@@ -90,12 +116,26 @@
             });
 
             modalInstance.result.then(function (savedUser) {
-                if(DEBUG) console.log('savedUser', savedUser);
-                logger.logSuccess("Successed!");
-                updateUsers(savedUser);
+                if(DEBUG) console.log('saved user', savedUser);
+                $scope.refresh();
             }, function () {
                 // logger.logInfo('Modal dismissed at: ' + new Date());
             });
+        }
+
+        function indexOf(users, user){
+          var index = -1;
+          angular.forEach(users, function(forEachUser, idx){
+            if(user._id === forEachUser._id){
+              index = idx;
+            }
+          });
+
+          return index;
+        }
+
+        function updateUser(){
+
         }
 
         $scope.init();

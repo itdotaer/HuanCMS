@@ -17,7 +17,7 @@ exports.createUser = function(name, loginName, pwd, email, operUserId, callback)
 
 exports.getUsers = function(opt, callback){
     User.find().limit(opt.size).skip((opt.index - 1) * opt.size)
-        .populate('createdBy').populate('lastUpdatedBy')
+        .populate('createdBy', 'name').populate('updatedBy', 'name')
         .select('_id name loginName email createdAt createdBy updatedAt updatedBy')
         .exec(callback);
 };
@@ -49,4 +49,15 @@ exports.updateById = function(userId, user, operUserId, callback){
 
 exports.userLogin = function(userName, password, callback){
     User.findOne({loginName: userName, pwd: password}).select('_id name loginName pwd email').exec(callback);
+};
+
+exports.search = function(searchTxt, opt, callback){
+    User.find({loginName: searchTxt}).limit(opt.size).skip((opt.index - 1) * opt.size)
+        .populate('createdBy', 'name').populate('updatedBy', 'name')
+        .select('_id name loginName email createdAt createdBy updatedAt updatedBy')
+        .exec(callback);
+};
+
+exports.searchTotal = function(searchTxt, callback){
+    User.count({loginName: searchTxt}, callback);
 };

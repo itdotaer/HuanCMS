@@ -12,9 +12,11 @@
             login: login,
             logout: logout,
             get: get,
+            getById: getById,
             add: add,
             update: update,
-            delete: remove
+            delete: remove,
+            search: search
         };
 
         return service;
@@ -61,6 +63,8 @@
         function add(user){
             var deferred = $q.defer();
 
+            if(DEBUG) console.log('Prepare add user:' + angular.toJson(user));
+
             $http.post(APIURL + 'users', angular.toJson(user), {
                 headers:{
                     'Content-Type': 'application/json'
@@ -87,9 +91,35 @@
         }
 
         function remove(userId){
+            if(DEBUG) console.log('Delete by userId', userId)
             var deferred = $q.defer();
 
-            $http.delete(APIURL + 'user/' + user._id)
+            $http.delete(APIURL + 'user/' + userId)
+                .success(deferred.resolve)
+                .error(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        function getById(userId){
+            if(DEBUG) console.log('Get user by id', userId);
+            var deferred = $q.defer();
+
+            $http.get(APIURL + 'user/' + userId)
+                .success(deferred.resolve)
+                .error(deferred.reject);
+                
+            return deferred.promise;
+        }
+
+        function search(searchTxt, index, size){
+            var deferred = $q.defer();
+
+            $http.post(APIURL + 'users/search?index=' + index + '&size=' + size, angular.toJson({searchTxt: searchTxt}),{
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
                 .success(deferred.resolve)
                 .error(deferred.reject);
 

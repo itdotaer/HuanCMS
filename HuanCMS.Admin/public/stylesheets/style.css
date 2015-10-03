@@ -4,3 +4,15 @@
     position: relative;
     top: 300px;
 }
+
+.update, .delete{
+	cursor: pointer;
+}
+
+.update{
+	color: green;
+}
+
+.delete{
+	color: red;
+}

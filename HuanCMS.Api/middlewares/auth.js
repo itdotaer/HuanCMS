@@ -26,5 +26,5 @@ exports.loginRequired = function(req, res, next){
 exports.getLoginUser = function(req, res, next){
     var token = req.token;
 
-    return jwtTool.verify(bearerToken);
+    return jwtTool.verify(token);
 };

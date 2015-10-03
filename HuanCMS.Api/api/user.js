@@ -5,13 +5,19 @@ var auth = require('../middlewares/auth');
 var jwtTool = require('../common/jwtTool');
 
 exports.createUser = function(req, res, next){
-    // var user = req.body;
+    var user = req.body;
 
-    // if(!user){
-    //     return res.json({errorMsg: 'No user data in body.'});
-    // }
+    if(!user){
+        return res.json({errorMsg: 'No user data in body.'});
+    }
 
-    UserProxy.createUser('harry', 'harry', 'harry', 'hujiangtao1235@qq.com', '55f2721c3a309f984adcdffb', function(err, user){
+    if(!user.name || !user.loginName || !user.pwd || !user.email){
+      return res.json({errorMsg: 'User info not entire.'});
+    }
+
+    var operUserId = base.getLoginUserId(req, res, next);
+
+    UserProxy.createUser(user.name, user.loginName, user.pwd, user.email, operUserId, function(err, user){
         if(err){
             return res.json({errorMsg: err});
         }
@@ -74,9 +80,12 @@ exports.deleteById = function(req, res, next){
     });
 };
 
-exports.updateUser = function(req, req, next){
+exports.updateUser = function(req, res, next){
     var userId = req.params.id;
     var user = req.body;
+
+    console.log('userId', userId);
+    console.log('user', user);
 
     if(!user){
         return res.json({errorMsg: 'No user data in body.'});
@@ -116,4 +125,30 @@ exports.userLogin = function(req, res, next){
 
         return res.send({data: user, userToken: userToken});
     });
+};
+
+exports.search = function(req, res, next){
+    var opt = {
+        index: req.query.index,
+        size: req.query.size
+    };
+
+    var searchTxt = req.body.searchTxt;
+
+    if(!opt.index || !opt.size){
+        console.log('opt null!')
+    }else{
+        UserProxy.search(searchTxt, opt, function(err, users){
+            if(err){
+                return res.json({errorMsg: err});
+            }
+            UserProxy.searchTotal(searchTxt, function(err, count){
+                if(err){
+                    return res.json({errorMsg: err});
+                }
+                console.log('users count', count)
+                return res.json({data: users, count: count});
+            });
+        });
+    }
 };

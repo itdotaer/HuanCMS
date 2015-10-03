@@ -41,6 +41,7 @@ var auth = require('../middlewares/auth');
 // User
 router.post('/users', auth.loginRequired, userApi.createUser)
 router.get('/users', auth.loginRequired, userApi.getUsers);
+router.post('/users/search', auth.loginRequired, userApi.search)
 
 router.get('/user/:id', auth.loginRequired, userApi.getById)
 router.put('/user/:id', auth.loginRequired, userApi.updateUser)

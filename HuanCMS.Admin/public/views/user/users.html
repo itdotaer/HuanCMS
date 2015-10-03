@@ -21,26 +21,19 @@
                 <button class="btn btn-default" title="Add" ng-click="add()">
                     <i class="fa fa-plus"></i>
                 </button>
-                <button class="btn btn-default" title="Add" ng-click="update({})">
-                    <i class="fa fa-plus"></i>
-                </button>
-                <button class="btn btn-default" title="Add" ng-click="add()">
-                    <i class="fa fa-plus"></i>
-                </button>
             </div>
         </div>
         <div class="col-md-4 pull-right">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
+              <input type="text" class="form-control" placeholder="Search for..." ng-model="searchTxt">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
+                <button class="btn btn-default" type="button" ng-click="search()">Search</button>
               </span>
             </div>
         </div>
     </div>
     <table class="table">
         <thead>
-            <th style="width: 20px;">Select</th>
             <th>User Name</th>
             <th>Display Name</th>
             <th>Email</th>
@@ -48,17 +41,21 @@
             <th>Created By</th>
             <th>Updated At</th>
             <th>Updated By</th>
+            <th>Action</th>
         </thead>
         <tbody>
             <tr ng-repeat="user in users">
-                <td style="width: 20px;"><input type="checkbox" /></td>
-                <td>{{user.name}}</td>
                 <td>{{user.loginName}}</td>
+                <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.createdAt | DateFormat}}</td>
-                <td>{{user.createdBy}}</td>
+                <td>{{user.createdBy.name}}</td>
                 <td>{{user.updatedAt | DateFormat}}</td>
-                <td>{{user.updatedBy}}</td>
+                <td>{{user.updatedBy.name}}</td>
+                <td>
+                    <span class="fa fa-edit update" ng-click="update(user._id)"></span>
+                    <span class="fa fa-remove delete" ng-click="delete(user._id)"></span> 
+                </td>
             </tr>
         </tbody>
     </table>

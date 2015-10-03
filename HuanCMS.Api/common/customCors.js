@@ -3,7 +3,7 @@ var cors = require('cors');
 exports.customCors = function(){
     var options = {
         origin: '*',
-        methods: '*',
+        methods: ['POST', 'GET', 'PUT', 'DELETE'],
         allowedHeaders: ['X-Requested-With', 'content-type', 'Authorization'],
         //maxAge:
         //preflightContinue:
