@@ -1,6 +1,6 @@
 ﻿(function() {
     'use strict';
-    var app = angular.module('app', ['ui.router', 'angularFileUpload', 'ngCookies','angular-md5', 'ui.bootstrap', 'services', 'header', 'left', 'footer', 'login']);
+    var app = angular.module('app', ['ui.router', 'ui.tree', 'angularFileUpload', 'ngCookies','angular-md5', 'ui.bootstrap', 'services', 'header', 'left', 'footer', 'login']);
 
     app.config(['$httpProvider', function($httpProvider) {
         // $httpProvider.defaults.useXDomain = true;
@@ -54,6 +54,11 @@
                 templateUrl: '/views/user/users.html',
                 controller: 'UsersCtrl'
             })
+            .state('classes', {
+                url: '/classes',
+                templateUrl: '/views/class/classView.html',
+                controller: 'ClassesCtrl'
+            });
     }
 
     function routeChanged($cookies, $state, $rootScope, $location, userService, logger, DEBUG) {

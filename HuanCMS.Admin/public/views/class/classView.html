@@ -1,0 +1,78 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Users
+    </h1>
+    <ol class="breadcrumb">
+        <li><a ui-sref="index"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Users</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+	<!-- Menu -->
+    <div class="row">
+        <div class="col-md-8 pull-left">
+            <div class="btn-group">
+            	<button class="btn btn-default" title="Refresh" ng-click="expandAll()">
+                    <i class="fa fa-expand"></i>
+                </button>
+                <button class="btn btn-default" title="Refresh" ng-click="collapseAll()">
+                    <i class="fa fa-compress"></i>
+                </button>
+                <button class="btn btn-default" title="Refresh" ng-click="refresh()">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <button class="btn btn-default" title="Add" ng-click="add()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4 pull-right">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for..." ng-model="searchTxt">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="search()">Search</button>
+              </span>
+            </div>
+        </div>
+    </div>
+    <!-- Detail classes -->
+    <script type="text/ng-template" id="nodes_renderer.html">
+	  <div ui-tree-handle class="tree-node tree-node-content">
+	    <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+	        class="glyphicon"
+	        ng-class="{
+	          'glyphicon-chevron-right': collapsed,
+	          'glyphicon-chevron-down': !collapsed
+	        }"></span></a>
+	    {{node.title}}
+	    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+	        class="glyphicon glyphicon-remove"></span></a>
+	    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span
+	        class="glyphicon glyphicon-plus"></span></a>
+	  </div>
+	  <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+	    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+	    </li>
+	  </ol>
+	</script>
+
+	<div class="row">
+	  <div class="col-sm-6">
+	    <div ui-tree id="tree-root" data-drag-enabled="false">
+	      <ol ui-tree-nodes ng-model="data">
+	        <li ng-repeat="node in data" ui-tree-node data-collapsed="true" ng-include="'nodes_renderer.html'"></li>
+	      </ol>
+	    </div>
+	  </div>
+
+	  <div class="col-sm-6">
+	    <div class="info">
+	      {{info}}
+	    </div>
+	    <pre class="code">{{ data | json }}</pre>
+	  </div>
+	</div>
+</section>
